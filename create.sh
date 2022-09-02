@@ -9,7 +9,7 @@ export SKIP_BOOTJAR_CHECKS=true
 
 #
 make bacon -j30 &
-sleep 100m
+sleep 95m
 kill %1
 
 #until [ $? == 0 ] ;
