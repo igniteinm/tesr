@@ -53,8 +53,9 @@ task:
      - make bacon -j30
 
   Upload_script:
-     - rclone copy --drive-chunk-size 256M --include /*.zip --stats 1s $WORKDIR/rom/$name_rom/out/target/product/$device/ rom:rom/$name_rom -P
-  
+     - cd $CIRRUS_WORKING_DIR
+     - chmod u+r+x upload.sh
+     - ./upload.sh
      
    
     
