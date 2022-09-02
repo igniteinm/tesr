@@ -4,15 +4,18 @@ env:
   CIRRUS_CLONE_DEPTH: "1"
   name_rom: "crdroid11.0"
 
+
+
 task:
   name: "build"
+  only_if: $CIRRUS_REPO_OWNER == 'igniteinm'
   timeout_in: 120m
   container:
     image: greengreen2212/ubuntu:17
     cpu: 8
     memory: 32G
 
-Ccache:
+  ccache:
      - cd $WORKDIR
      - mkdir -p ~/.config/rclone
      - echo "$rcloneconfig" > ~/.config/rclone/rclone.conf
@@ -20,7 +23,7 @@ Ccache:
      - tar xzf ccache.tar.gz
      - rm -rf ccache.tar.gz
 
-Sync:
+  sync:
      - mkdir -p $WORKDIR/rom/$name_rom
      - cd $WORKDIR/rom/$name_rom
      - rm -rf .repo/local_manifests
@@ -28,7 +31,7 @@ Sync:
      - git clone https://github.com/walternewtz/local_manifest.git --depth 1 -b crdroid11.0 .repo/local_manifests
      - repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j10
 
-Build:
+  build:
      - cd $WORKDIR/rom/$name_rom
      - export PATH="/usr/lib/ccache:$PATH"
      - export CCACHE_DIR=$WORKDIR/ccache
@@ -51,7 +54,7 @@ Build:
      - export SKIP_BOOTJAR_CHECKS=true
      - make bacon -j30
 
-Upload:
+  upload:
      - rclone copy --drive-chunk-size 256M --include /*.zip --stats 1s $WORKDIR/rom/$name_rom/out/target/product/$device/ rom:rom/$name_rom -P
   
      
