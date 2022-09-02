@@ -13,12 +13,9 @@ task:
     memory: 32G
   
   Ache_script:
-     - cd $WORKDIR
-     - mkdir -p ~/.config/rclone
-     - echo "$rcloneconfig" > ~/.config/rclone/rclone.conf
-     - rclone copy --drive-chunk-size 256M --stats 1s rom:rom/ccache/$name_rom/ccache.tar.gz $WORKDIR -P
-     - tar xzf ccache.tar.gz
-     - rm -rf ccache.tar.gz
+     - cd $CIRRUS_WORKING_DIR
+     - chmod u+r+x loadache.sh
+     - ./loadache.sh
 
   Sync_script:
      - mkdir -p $WORKDIR/rom/$name_rom
