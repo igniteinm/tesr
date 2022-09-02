@@ -1,4 +1,4 @@
-env:
+env: 
   rcloneconfig: "test"
   WORKDIR: "/tmp/build"
   CIRRUS_CLONE_DEPTH: "1"
