@@ -1,6 +1,6 @@
 env: 
-  rcloneconfig: "ENCRYPTED[258d59647d6b5ed15d4e32f3cd351ad7863f913e4a15239148f08822af8c76893cd12cebc3c5f1af05241fff77292125]"
-  WORKDIR: "/tmp/build"
+  rcloneconfig: "ENCRYPTED[!258d59647d6b5ed15d4e32f3cd351ad7863f913e4a15239148f08822af8c76893cd12cebc3c5f1af05241fff77292125!]"
+  WORKDIR: "/tmp/cirrus-ci-build"
   CIRRUS_CLONE_DEPTH: "1"
   name_rom: "crdroid11.0"
 
