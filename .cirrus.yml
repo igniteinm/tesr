@@ -6,7 +6,6 @@ env:
 
 task:
   name: "build"
-  only_if: $CIRRUS_REPO_OWNER == 'igniteinm'
   timeout_in: 120m
   container:
     image: greengreen2212/ubuntu:17
