@@ -7,7 +7,6 @@ env:
 task:
   name: "build"
   timeout_in: 120m
-  folder: $WORKDIR
   container:
     image: greengreen2212/ubuntu:17
     cpu: 8
