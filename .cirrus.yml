@@ -4,8 +4,6 @@ env:
   CIRRUS_CLONE_DEPTH: "1"
   name_rom: "crdroid11.0"
 
-
-
 task:
   name: "build"
   only_if: $CIRRUS_REPO_OWNER == 'igniteinm'
