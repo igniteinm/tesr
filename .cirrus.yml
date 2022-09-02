@@ -1,1 +1,59 @@
+env:
+  rcloneconfig: "test"
+  WORKDIR: "/tmp/build"
+  CIRRUS_CLONE_DEPTH: "1"
+  name_rom: "crdroid11.0"
 
+task:
+  name: "build"
+  timeout_in: 120m
+  container:
+    dockerfile: Dockerfile
+    cpu: 8
+    memory: 32G
+
+Ccache:
+     - cd $WORKDIR
+     - mkdir -p ~/.config/rclone
+     - echo "$rcloneconfig" > ~/.config/rclone/rclone.conf
+     - rclone copy --drive-chunk-size 256M --stats 1s rom:rom/ccache/$name_rom/ccache.tar.gz $WORKDIR -P
+     - tar xzf ccache.tar.gz
+     - rm -rf ccache.tar.gz
+
+Sync:
+     - mkdir -p $WORKDIR/rom/$name_rom
+     - cd $WORKDIR/rom/$name_rom
+     - rm -rf .repo/local_manifests
+     - repo init --depth=1 --no-repo-verify -u https://github.com/crdroidandroid/android -b 11.0 -g default,-mips,-darwin,-notdefault
+     - git clone https://github.com/walternewtz/local_manifest.git --depth 1 -b crdroid11.0 .repo/local_manifests
+     - repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j10
+
+Build:
+     - cd $WORKDIR/rom/$name_rom
+     - export PATH="/usr/lib/ccache:$PATH"
+     - export CCACHE_DIR=$WORKDIR/ccache
+     - export CCACHE_EXEC=/usr/bin/ccache
+     - export USE_CCACHE=1
+     - export CCACHE_DEPEND=true
+     - export CCACHE_FILECLONE=true
+     - export CCACHE_LIMIT_MULTIPLE=0.9
+     - export CCACHE_NOCOMPRESS=true
+     - export CCACHE_NOHASHDIR=1
+     - which ccache
+     - ccache -M 100
+     - ccache -z
+     - source build/envsetup.sh
+     - lunch lineage_beryllium-user
+     - export TZ=Asia/Delhi
+     - export BUILD_USERNAME=beryllium
+     - export BUILD_HOSTNAME=user
+     - export SKIP_ABI_CHECKS=true
+     - export SKIP_BOOTJAR_CHECKS=true
+     - make bacon -j30
+
+Upload:
+     - rclone copy --drive-chunk-size 256M --include /*.zip --stats 1s $WORKDIR/rom/$name_rom/out/target/product/$device/ rom:rom/$name_rom -P
+  
+     
+   
+    
