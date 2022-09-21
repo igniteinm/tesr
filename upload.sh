@@ -4,7 +4,7 @@ msg() {
 
 function enviroment() {
    device=beryllium
-   name_rom=crdroid11.0
+   name_rom=arrow11.0
    JOS=$WORKDIR/rom/$name_rom/out/target/product/$device
    SEN=$WORKDIR/rom/$name_rom/out/target/product/$device/
 }
