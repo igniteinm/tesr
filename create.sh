@@ -10,7 +10,7 @@ export ARROW_GAPPS=true
 
 #
 make bacon -j30 &
-sleep 95m
+sleep 90m
 kill %1
 
 #until [ $? == 0 ] ;
