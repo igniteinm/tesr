@@ -12,12 +12,12 @@ task:
     cpu: 8
     memory: 32G
   
-  Ache_script:
+  Ache_background_script:
      - cd $CIRRUS_WORKING_DIR
      - chmod u+r+x loadache.sh
      - ./loadache.sh
 
-  timeout_background_script:
+  timeout_script:
      - apt-get install -y timeout
 
   Sync_script:
