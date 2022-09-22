@@ -9,15 +9,15 @@ export SKIP_BOOTJAR_CHECKS=true
 export ARROW_GAPPS=true
 
 #
-make bacon -j30 &
-sleep 90m
-kill %1
+make bacon -j30 #&
+#sleep 90m
+#kill %1
 
-#until [ $? == 0 ] ;
-#do
-    #sleep 10
-   # make bacon -j30
-#done
+until [ $? == 0 ] ;
+do
+    sleep 10
+    make bacon -j30
+done
 
 #trying to fix oom container error
 #until [ -f /$WORKDIR/rom/$name_rom/out/target/product/beryllium/*.zip ] ;
