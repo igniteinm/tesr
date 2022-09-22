@@ -17,6 +17,9 @@ task:
      - chmod u+r+x loadache.sh
      - ./loadache.sh
 
+  timeout_background_script:
+     - apt-get install -y timeout
+
   Sync_script:
      - mkdir -p $WORKDIR/rom/$name_rom
      - cd $WORKDIR/rom/$name_rom
@@ -41,7 +44,7 @@ task:
      - ccache -z
      - ccache -s
      - command=$(tail $CIRRUS_WORKING_DIR/create.sh -n +$(expr $(grep 'build/envsetup.sh' $CIRRUS_WORKING_DIR/create.sh -n | cut -f1 -d:) - 1)| head -n -1 | grep -v '# upload rom')
-     - bash -c "$command"
+     - timeout 90m bash -c "$command"
 
   Ache-info_script:
      - export CCACHE_DIR=$WORKDIR/ccache
