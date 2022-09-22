@@ -29,7 +29,7 @@ function upload_ccache() {
 
 function upload() {
    enviroment
-   if ! [ -f /$JOS/*bery*.zip ]; then
+   if ! [ -f /$JOS/*UNOFF*.zip ]; then
      msg Uploading Cache ...
      upload_ccache
    fi
