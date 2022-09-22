@@ -41,7 +41,7 @@ task:
      - ccache -z
      - ccache -s
      - command=$(tail $CIRRUS_WORKING_DIR/create.sh -n +$(expr $(grep 'build/envsetup.sh' $CIRRUS_WORKING_DIR/create.sh -n | cut -f1 -d:) - 1)| head -n -1 | grep -v '# upload rom')
-     - bash -c "$command" & sleep 90m; kill $!
+     - bash -c "$command" # & sleep 90m; #kill $!
 
   Ache-info_script:
      - export CCACHE_DIR=$WORKDIR/ccache
